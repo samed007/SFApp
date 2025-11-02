@@ -1,0 +1,64 @@
+@using System.Linq
+@model IEnumerable<SFApp.DTOs.InventarioDTO>
+
+@{
+    ViewData["Title"] = "Editar Inventario por Transacción";
+    var idTransaccion = Model.FirstOrDefault()?.IdTransaccion ?? "(Sin datos)";
+}
+
+<h2>Inventario asociado a la transacción @idTransaccion</h2>
+
+<form method="post" asp-action="GuardarCambios" asp-controller="Devolucion">
+    <input type="hidden" name="IdTransaccion" value="@idTransaccion" />
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID Producto</th>
+                <th>Cantidad</th>
+                <th>Tipo</th>
+                <th>Albarán</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var item = Model.ElementAt(i);
+                <tr>
+                    <td>
+                        <input type="hidden" name="Inventarios[@i].IdProducto" value="@item.IdProducto" />
+                        @item.IdProducto
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" name="Inventarios[@i].Cantidad" value="@item.Cantidad" required />
+                    </td>
+                    <td>
+                        <select class="form-select" name="Inventarios[@i].Tipo">
+                            <option value="EN" selected="@(item.Tipo == "EN")">Entrada (EN)</option>
+                            <option value="VE" selected="@(item.Tipo == "VE")">Venta (VE)</option>
+                            <option value="DV" selected="@(item.Tipo == "DV")">Devolución (DV)</option>
+                            <option value="DE" selected="@(item.Tipo == "DE")">Descuento (DE)</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="Inventarios[@i].Albaran" value="@item.Albaran" />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="Inventarios[@i].Fecha" value="@item.Fecha.ToString("yyyy-MM-dd")" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-3 text-center">
+    <button type="submit" class="btn btn-success px-4">Guardar Cambios</button>
+    <button type="submit" name="accion" value="CANCEL" class="btn btn-danger px-4"
+            onclick="return confirm('¿Seguro que deseas cancelar esta transacción?');">
+        Cancelar Transacción
+    </button>
+    <a href="@Url.Action("Index", "Devolucion")" class="btn btn-secondary px-4">Volver</a>
+</div>
+
+</form>
