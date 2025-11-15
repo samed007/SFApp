@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SFApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f4dc366fb3bfa5c5f65eaa961d3907f174ffcc4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d87d468d22e837a6e31e74df14a6088a3e9e51d9")]
 [assembly: System.Reflection.AssemblyProductAttribute("SFApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SFApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

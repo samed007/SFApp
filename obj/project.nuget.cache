@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "387EYWFFSfE=",
+  "dgSpecHash": "9x1rtMWPHXI=",
   "success": true,
-  "projectFilePath": "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\SFApp.csproj",
+  "projectFilePath": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\SFApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\christiam\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

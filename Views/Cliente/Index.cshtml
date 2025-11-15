@@ -1,0 +1,48 @@
+@model IEnumerable<SFApp.DTOs.ClientesDTO>
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">👤 Listado de Clientes</h2>
+
+    <a class="btn btn-success mb-3" asp-action="Agregar" asp-controller="Cliente">➕ Agregar Cliente</a>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Ciudad</th>
+                <th>Código Postal</th>
+                <th>Fecha Registro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.IdCliente</td>
+                    <td>@c.Nombre</td>
+                    <td>@c.Apellido</td>
+                    <td>@c.Email</td>
+                    <td>@c.Telefono</td>
+                    <td>@c.Direccion</td>
+                    <td>@c.Ciudad</td>
+                    <td>@c.CodigoPostal</td>
+                    <td>@c.FechaRegistro.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning mb-1" asp-action="Editar" asp-route-idCliente="@c.IdCliente">✏️ Editar</a>
+
+                        <form asp-action="Eliminar" asp-controller="Cliente" method="post" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres eliminar este cliente?');">
+                            <input type="hidden" name="idCliente" value="@c.IdCliente" />
+                            <button type="submit" class="btn btn-sm btn-danger">🗑 Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

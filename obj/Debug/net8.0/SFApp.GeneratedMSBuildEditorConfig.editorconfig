@@ -9,79 +9,91 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SFApp
 build_property.RootNamespace = SFApp
-build_property.ProjectDir = C:\PROYECTOS SUPER SERIOS\2do Respaldo de mi proyecto fct\SFApp\SFApp\
+build_property.ProjectDir = C:\PROYECTOS SUPER SERIOS\SFApp\SFApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\PROYECTOS SUPER SERIOS\2do Respaldo de mi proyecto fct\SFApp\SFApp
+build_property.MSBuildProjectDirectory = C:\PROYECTOS SUPER SERIOS\SFApp\SFApp
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Auth/AccessDenied.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Auth/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Auth/Login.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Cobro/Index.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Cliente/Agregar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxBZ3JlZ2FyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Cliente/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxFZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Cliente/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Cobro/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29icm9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Devolucion/Editar.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Devolucion/Editar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2b2x1Y2lvblxFZGl0YXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Devolucion/Index.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Devolucion/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2b2x1Y2lvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Entrada/Index.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Entrada/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50cmFkYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Home/Index.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Home/Privacy.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Informe/Index.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Informe/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5mb3JtZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Producto/Agregar.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Producto/Agregar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cQWdyZWdhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Producto/Editar.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Producto/Editar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRWRpdGFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Producto/Index.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Producto/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Shared/Error.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/_ViewImports.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/_ViewStart.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/PROYECTOS SUPER SERIOS/2do Respaldo de mi proyecto fct/SFApp/SFApp/Views/Shared/_Layout.cshtml]
+[C:/PROYECTOS SUPER SERIOS/SFApp/SFApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3uybifpuoc

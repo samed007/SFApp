@@ -40,6 +40,10 @@ builder.Services.AddScoped<IUsuariosDAO, UsuariosDAO>();
 builder.Services.AddScoped<IProductosService, ProductosService>();
 builder.Services.AddScoped<IProductosDAO, ProductosDAO>();
 
+
+builder.Services.AddScoped<IClientesService, ClientesService>();
+builder.Services.AddScoped<IClientesDAO, ClientesDAO>();
+
 builder.Services.AddScoped<ITransaccionesService, TransaccionesService>();
 builder.Services.AddScoped<ITransaccionesDAO, TransaccionesDAO>();
 
