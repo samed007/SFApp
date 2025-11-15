@@ -1,10 +1,9 @@
 @model SFApp.ViewModels.TransaccionesViewModel
 
-<!-- Enlazar Bootstrap 5 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-/* Paleta Surfer Pets Coruña */
+
 :root {
     --azul-oscuro: #004D61;
     --turquesa: #009CA6;
@@ -104,8 +103,8 @@ input[type="number"]:focus {
             <datalist id="productos">
                 @foreach (var producto in Model.Productos)
                 {
-                    <option value="@producto.IdProducto" data-nombre="@producto.producto" data-marca="@producto.marca" data-precio="@producto.precioTotal">
-                        @producto.producto - @producto.marca
+                    <option value="@producto.IdProducto" data-nombre="@producto.Producto" data-marca="@producto.Marca" data-precio="@producto.PrecioTotal">
+                        @producto.Producto - @producto.Marca
                     </option>
                 }
             </datalist>
@@ -139,7 +138,7 @@ input[type="number"]:focus {
 
     <p class="text-end"><strong>Total:</strong> <span id="total">0</span></p>
 
-    <!-- Formulario oculto para enviar la transacción -->
+    
     <form id="confirmarTransaccionForm" asp-action="ConfirmarTransaccion" method="post">
         <button type="submit" class="btn w-100 mt-3">✅ Confirmar Transacción</button>
     </form>

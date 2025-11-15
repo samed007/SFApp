@@ -13,6 +13,10 @@ namespace SFApp.Services
         Task Agregar(ProductosDTO productoDto);
         Task Actualizar(ProductosDTO productoDto);
         Task Eliminar(int id);
+        Task<ProductosDTO> ObtenerStockPorProducto(int idProducto, DateTime? fechaDesde);
+        Task<IEnumerable<VentasPorDiaDTO>> ObtenerVentasPorDia(int idProducto, DateTime fechaDesde);
+        
+
     }
 
     public class ProductosService : IProductosService
@@ -60,5 +64,40 @@ namespace SFApp.Services
         {
             await _productosDAO.Eliminar(id);
         }
+        public async Task<ProductosDTO?> ObtenerStockPorProducto(int idProducto, DateTime? fechaDesde)
+        {
+            
+            var resultado = await _productosDAO.ObtenerInformeStock(idProducto, fechaDesde);
+            var producto = resultado.FirstOrDefault();
+
+            if (producto == null)
+                return null;
+
+            var productoDTO = _mapper.Map<ProductosDTO>(producto);
+
+        
+            if (fechaDesde.HasValue)
+            {
+            
+                var ventasPorDia = await ObtenerVentasPorDia(idProducto, fechaDesde.Value);
+                productoDTO.VentasPorDia = ventasPorDia.ToList();
+            }
+
+            return productoDTO;
+        }
+
+        
+        public async Task<IEnumerable<VentasPorDiaDTO>> ObtenerVentasPorDia(int idProducto, DateTime fechaDesde)
+        {
+            var ventas = await _productosDAO.ObtenerVentasPorDia(idProducto, fechaDesde);
+            return ventas.Select(v => new VentasPorDiaDTO 
+            { 
+                FechaVenta = v.FechaVenta, 
+                Ventas = v.Ventas 
+            });
+        }
+
+
+
     }
 }

@@ -1,0 +1,70 @@
+@model SFApp.DTOs.ProductosDTO
+@{
+    ViewData["Title"] = "Agregar Producto";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-success">➕ Agregar Producto</h2>
+
+    <form asp-action="Agregar" method="post" asp-controller="Producto">
+        <div class="mb-3">
+            <label asp-for="Producto" class="form-label"></label>
+            <input asp-for="Producto" class="form-control" name="producto.Producto" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Marca" class="form-label"></label>
+            <input asp-for="Marca" class="form-control" name="producto.Marca" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label"></label>
+            <textarea asp-for="Descripcion" class="form-control" name="producto.Descripcion"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="EAN" class="form-label"></label>
+            <input asp-for="EAN" class="form-control" name="producto.EAN" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SKU" class="form-label"></label>
+            <input asp-for="SKU" class="form-control" name="producto.SKU" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PrecioCompra" class="form-label"></label>
+            <input asp-for="PrecioCompra" class="form-control" type="number" step="0.01" lang="en" name="producto.PrecioCompra" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="IVA" class="form-label"></label>
+            <input asp-for="IVA" class="form-control" type="number" step="0.01" lang="en" name="producto.IVA" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PrecioTotal" class="form-label"></label>
+            <input asp-for="PrecioTotal" class="form-control" type="number" step="0.01" lang="en" name="producto.PrecioTotal" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Categoria" class="form-label"></label>
+            <input asp-for="Categoria" class="form-control" name="producto.Categoria" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Talla" class="form-label"></label>
+            <input asp-for="Talla" class="form-control" name="producto.Talla" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Color" class="form-label"></label>
+            <input asp-for="Color" class="form-control" name="producto.Color" />
+        </div>
+
+        <button type="submit" class="btn btn-success">💾 Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

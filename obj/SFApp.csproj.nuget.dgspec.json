@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp.csproj": {}
+    "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\SFApp.csproj": {}
   },
   "projects": {
-    "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp.csproj": {
+    "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\SFApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp.csproj",
+        "projectUniqueName": "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\SFApp.csproj",
         "projectName": "SFApp",
-        "projectPath": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp.csproj",
+        "projectPath": "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\SFApp.csproj",
         "packagesPath": "C:\\Users\\christiam\\.nuget\\packages\\",
-        "outputPath": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\obj\\",
+        "outputPath": "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\christiam\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,6 +46,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
             },
             "Dapper": {
               "target": "Package",

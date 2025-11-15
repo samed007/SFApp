@@ -1,34 +1,62 @@
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 using SFApp.DAOs;
 using SFApp.Mapping;
 using SFApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// -----------------------
+// Add services to the container
+// -----------------------
 builder.Services.AddControllersWithViews();
 
+// AutoMapper
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<MappingProfile>();
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "SFAppAuthCookie";     // Nombre de la cookie
+        options.LoginPath = "/Auth/Login";           // Ruta del login
+        options.LogoutPath = "/Auth/Logout";         // Ruta del logout
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+        options.SlidingExpiration = true;         // Renueva la cookie al usarla
+        options.Cookie.HttpOnly = true;             // No accesible desde JS
+        options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+    });
+
+
+builder.Services.AddAuthorization();
+
+// -----------------------
 // Registrar servicios y DAOs
+// -----------------------
+builder.Services.AddScoped<IUsuariosService, UsuariosService>();
+builder.Services.AddScoped<IUsuariosDAO, UsuariosDAO>();
+
 builder.Services.AddScoped<IProductosService, ProductosService>();
 builder.Services.AddScoped<IProductosDAO, ProductosDAO>();
-// Registrar servicios y DAOs
+
 builder.Services.AddScoped<ITransaccionesService, TransaccionesService>();
 builder.Services.AddScoped<ITransaccionesDAO, TransaccionesDAO>();
 
 builder.Services.AddScoped<IInventarioService, InventarioService>();
 builder.Services.AddScoped<IInventarioDAO, InventarioDAO>();
+
+// -----------------------
+// Construir la aplicación
+// -----------------------
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// -----------------------
+// Middleware
+// -----------------------
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -37,10 +65,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();  
 app.UseAuthorization();
 
+// -----------------------
+// Rutas
+// -----------------------
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Auth}/{action=Login}/{id?}");
+
 
 app.Run();

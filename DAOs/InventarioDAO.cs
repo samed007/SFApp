@@ -14,7 +14,7 @@ namespace SFApp.DAOs
         Task Actualizar(Inventario inventario);
         Task Eliminar(int id);
         Task<int> ObtenerStock(int idProducto);
-        Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<Inventario> productos);
+        Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<Inventario> productos, string usuario);
         Task RegistrarDevolucion(string idTransaccion, string tipo, string? albaran, IEnumerable<Inventario> productos);
         Task<IEnumerable<Inventario>> ConsultarPorTransaccionId(string transaccionId);
         
@@ -42,7 +42,7 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string sqlQuery = "SELECT * FROM Inventario";
+                string sqlQuery = "SELECT * FROM Inventario WHERE Estado='A'";
                 return await db.QueryAsync<Inventario>(sqlQuery);
             }
         }
@@ -51,7 +51,7 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string sqlQuery = "SELECT * FROM Inventario WHERE IdProducto LIKE @IdProducto";
+                string sqlQuery = "SELECT * FROM Inventario WHERE IdProducto LIKE @IdProducto and Estado='A'";
                 return await db.QueryAsync<Inventario>(sqlQuery, new { IdProducto = $"%{idProducto}%" });
             }
         }
@@ -96,7 +96,7 @@ namespace SFApp.DAOs
             }
         }
 
-        // Obtiene el último stock de un producto
+        
         public async Task<int> ObtenerStock(int idProducto)
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
@@ -108,15 +108,15 @@ namespace SFApp.DAOs
                     ORDER BY Fecha DESC, id DESC";
 
                 var stock = await db.QueryFirstOrDefaultAsync<int?>(sqlQuery, new { IdProducto = idProducto });
-                return stock ?? 0; // Si no hay registros, devuelve 0
+                return stock ?? 0; 
             }
         }
 
-        public async Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<Inventario> productos)
+        public async Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<Inventario> productos, string usuario)
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                // Crear DataTable para enviar como Table-Valued Parameter (TVP)
+                
                 var productosTable = new DataTable();
                 productosTable.Columns.Add("IdProducto", typeof(int));
                 productosTable.Columns.Add("Cantidad", typeof(int));
@@ -126,7 +126,7 @@ namespace SFApp.DAOs
                     productosTable.Rows.Add(prod.IdProducto, prod.Cantidad);
                 }
 
-                // Llamar al stored procedure
+                
                 await db.ExecuteAsync(
                     "sp_RegistrarTransaccionVenta",
                     new
@@ -134,7 +134,8 @@ namespace SFApp.DAOs
                         ImporteTotal = importeTotal,
                         Tipo = tipo,
                         Albaran = albaran,
-                        Productos = productosTable.AsTableValuedParameter("TipoProductos")
+                        Productos = productosTable.AsTableValuedParameter("TipoProductos"),
+                        Usuario = usuario
                     },
                     commandType: CommandType.StoredProcedure
                 );
@@ -145,7 +146,7 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                // Crear DataTable para enviar como Table-Valued Parameter (TVP)
+                
                 var productosTable = new DataTable();
                 productosTable.Columns.Add("IdProducto", typeof(int));
                 productosTable.Columns.Add("Cantidad", typeof(int));
@@ -155,13 +156,13 @@ namespace SFApp.DAOs
                     productosTable.Rows.Add(prod.IdProducto, prod.Cantidad);
                 }
 
-                // Llamar al stored procedure
+                
                 await db.ExecuteAsync(
                     "sp_RegistrarDevolucion",
                     new
                     {
                         IdTransaccion = idTransaccion,
-                        Tipo = tipo,                 // 'DE' o 'DV'
+                        Tipo = tipo,                 
                         Albaran = albaran,
                         Productos = productosTable.AsTableValuedParameter("TipoProductos")
                     },

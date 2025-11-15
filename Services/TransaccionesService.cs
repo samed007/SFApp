@@ -13,7 +13,7 @@ namespace SFApp.Services
         Task Actualizar(TransaccionesDTO transaccionDto);
         Task Eliminar(int id);
         Task<TransaccionesDTO?> ConsultarPorTransaccionId(string transaccionesId);
-        Task EjecutarTransaccion(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY");
+          Task EjecutarTransaccion(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY", string usuario = "SYSTEM");
 
     }
 
@@ -64,11 +64,9 @@ namespace SFApp.Services
             var transaccion = await _transaccionesDAO.ConsultarPorTransaccionId(transaccionId);
             return _mapper.Map<TransaccionesDTO?>(transaccion);
         }
-       public async Task EjecutarTransaccion(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY")
+       public async Task EjecutarTransaccion(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY", string usuario = "SYSTEM")
         {
-            // Llamar al nuevo método del DAO que ejecuta el SP
-            await _transaccionesDAO.EjecutarTransaccionAsync(idTransaccion, tipo, albaran, productos, accion);
+            await _transaccionesDAO.EjecutarTransaccionAsync(idTransaccion, tipo, albaran, productos, accion, usuario);
         }
-
     }
 }

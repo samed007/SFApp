@@ -15,7 +15,7 @@ namespace SFApp.DAOs
         Task Actualizar(Transacciones transaccion);
         Task Eliminar(int id);
         Task<Transacciones?> ConsultarPorTransaccionId(string transaccionId);
-        Task EjecutarTransaccionAsync(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY");
+        Task EjecutarTransaccionAsync(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY", string usuario = "SYSTEM");
 
     }
 
@@ -41,7 +41,7 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string sqlQuery = "SELECT * FROM Transacciones";
+                string sqlQuery = "SELECT * FROM Transacciones WHERE Estado='A'";
                 return await db.QueryAsync<Transacciones>(sqlQuery);
             }
         }
@@ -50,7 +50,7 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string sqlQuery = "SELECT * FROM Transacciones WHERE Tipo = @Tipo";
+                string sqlQuery = "SELECT * FROM Transacciones WHERE Tipo = @Tipo and Estado='A'";
                 return await db.QueryAsync<Transacciones>(sqlQuery, new { Tipo = tipo });
             }
         }
@@ -104,35 +104,46 @@ namespace SFApp.DAOs
             }
         }
         
-          public async Task EjecutarTransaccionAsync(string idTransaccion, string tipo, string? albaran, List<InventarioDTO> productos, string accion = "APPLY")
+        public async Task EjecutarTransaccionAsync(
+    string idTransaccion, 
+    string tipo, 
+    string? albaran, 
+    List<InventarioDTO> productos, 
+    string accion = "APPLY",
+    string usuario = "SYSTEM")   
+{
+    using (var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+    using (var cmd = new SqlCommand("sp_ActualizarTransaccion", conn))
+    {
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        
+        cmd.Parameters.AddWithValue("@IdTransaccion", idTransaccion);
+        cmd.Parameters.AddWithValue("@Tipo", tipo);
+        cmd.Parameters.AddWithValue("@Albaran", (object?)albaran ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@Accion", accion);
+
+        
+        cmd.Parameters.AddWithValue("@Usuario", usuario);
+
+        
+        var tvp = new DataTable();
+        tvp.Columns.Add("IdProducto", typeof(int));
+        tvp.Columns.Add("Cantidad", typeof(int));
+
+        foreach (var p in productos)
         {
-            using (var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            using (var cmd = new SqlCommand("sp_ActualizarTransaccion", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@IdTransaccion", idTransaccion);
-                cmd.Parameters.AddWithValue("@Tipo", tipo);
-                cmd.Parameters.AddWithValue("@Albaran", (object?)albaran ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Accion", accion);
-
-                // Crear el parámetro tipo tabla (TipoProductos)
-                var tvp = new DataTable();
-                tvp.Columns.Add("IdProducto", typeof(int));
-                tvp.Columns.Add("Cantidad", typeof(int));
-
-                foreach (var p in productos)
-                {
-                    tvp.Rows.Add(p.IdProducto, p.Cantidad);
-                }
-
-                var param = cmd.Parameters.AddWithValue("@Productos", tvp);
-                param.SqlDbType = SqlDbType.Structured;
-                param.TypeName = "TipoProductos";
-
-                await conn.OpenAsync();
-                await cmd.ExecuteNonQueryAsync();
-            }
+            tvp.Rows.Add(p.IdProducto, p.Cantidad);
         }
+
+        var param = cmd.Parameters.AddWithValue("@Productos", tvp);
+        param.SqlDbType = SqlDbType.Structured;
+        param.TypeName = "TipoProductos";
+
+        await conn.OpenAsync();
+        await cmd.ExecuteNonQueryAsync();
+    }
+}
+
     }
 }

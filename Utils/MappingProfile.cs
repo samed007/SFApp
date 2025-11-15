@@ -11,6 +11,7 @@ namespace SFApp.Mapping
             CreateMap<Productos, ProductosDTO>().ReverseMap();
             CreateMap<Transacciones, TransaccionesDTO>().ReverseMap();
             CreateMap<Inventario, InventarioDTO>().ReverseMap();
+            CreateMap<Usuario, UsuarioDTO>().ReverseMap();
            
         }
     }

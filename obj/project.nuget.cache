@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "JA2vNRzDQxw=",
+  "dgSpecHash": "387EYWFFSfE=",
   "success": true,
-  "projectFilePath": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp.csproj",
+  "projectFilePath": "C:\\PROYECTOS SUPER SERIOS\\2do Respaldo de mi proyecto fct\\SFApp\\SFApp\\SFApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\christiam\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
+    "C:\\Users\\christiam\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\christiam\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",

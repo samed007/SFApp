@@ -1,0 +1,46 @@
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">📦 Listado de Productos</h2>
+
+    <a class="btn btn-success mb-3" asp-action="Agregar" asp-controller="Producto">➕ Agregar Producto</a>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Marca</th>
+                <th>Descripción</th>
+                <th>EAN</th>
+                <th>SKU</th>
+                <th>Precio Compra</th>
+                <th>IVA</th>
+                <th>Precio Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.IdProducto</td>
+                    <td>@p.Producto</td>
+                    <td>@p.Marca</td>
+                    <td>@p.Descripcion</td>
+                    <td>@p.EAN</td>
+                    <td>@p.SKU</td>
+                    <td>@p.PrecioCompra.ToString("0.00") €</td>
+                    <td>@p.IVA.ToString("0.00")%</td>
+                    <td>@p.PrecioTotal.ToString("0.00") €</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning mb-1" asp-action="Editar" asp-route-idProducto="@p.IdProducto">✏️ Editar</a>
+                        
+                        <form asp-action="Eliminar" asp-controller="Producto" method="post" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres eliminar este producto?');">
+                            <input type="hidden" name="idProducto" value="@p.IdProducto" />
+                            <button type="submit" class="btn btn-sm btn-danger">🗑 Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

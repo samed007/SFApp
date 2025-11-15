@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using SFApp.Services;
 using SFApp.DTOs;
 using SFApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class EntradaController : Controller
 {
     private readonly IProductosService _productosService;
@@ -48,21 +50,21 @@ public async Task<IActionResult> AgregarProducto(TransaccionesViewModel vm)
         return View("Index", vm);
     }
 
-    // Buscar si ya existe
+    
     var existente = vm.ProductosSeleccionados.FirstOrDefault(p => p.Producto.IdProducto == idProducto);
 
     if (existente != null)
     {
-        // Sumar o restar cantidad
+        
         existente.Cantidad += vm.Cantidad;
 
-        // Si la cantidad queda <= 0, eliminar
+        
         if (existente.Cantidad <= 0)
             vm.ProductosSeleccionados.Remove(existente);
     }
     else
     {
-        // Solo agregar si cantidad > 0
+        
         if (vm.Cantidad > 0)
         {
             vm.ProductosSeleccionados.Add(new ProductoSeleccionadoVM
@@ -73,7 +75,7 @@ public async Task<IActionResult> AgregarProducto(TransaccionesViewModel vm)
         }
     }
 
-    // Limpiar inputs
+    
     vm.ProductoSeleccionado = "";
     vm.Cantidad = 1;
 
@@ -85,27 +87,32 @@ public async Task<IActionResult> ConfirmarTransaccion(TransaccionesViewModel vm,
     if (!vm.ProductosSeleccionados.Any())
     {
         ModelState.AddModelError("", "No hay productos seleccionados.");
+        var productos = await _productosService.ListarTodos();
+        vm.Productos = productos;
         return View("Index", vm);
     }
 
     try
     {
-        // Mapear los productos seleccionados a InventarioDTO
         var productosDto = vm.ProductosSeleccionados
             .Select(p => new InventarioDTO
             {
                 IdProducto = p.Producto.IdProducto,
                 Cantidad = p.Cantidad
-                // Fecha, Tipo, IdTransaccion y Albaran no se necesitan; el SP los maneja
             })
             .ToList();
 
-        // Llamar al service que ejecuta el SP
+        
+    
+        var codigoUsuario = User.Claims.FirstOrDefault(c => c.Type == "CodigoUsuario")?.Value ?? "SYSTEM";
+
+
         await _inventarioService.RegistrarTransaccion(
-            importeTotal: vm.PrecioTotal,
-            tipo: "EN",       // Entrada
-            albaran: albaran, // Ahora viene por parámetro
-            productosDto: productosDto
+            importeTotal: vm.PrecioCompra,
+            tipo: "EN",
+            albaran: albaran,
+            productosDto: productosDto,
+            usuario: codigoUsuario 
         );
 
         TempData["SuccessMessage"] = "✅ Transacción registrada y stock actualizado.";
@@ -113,10 +120,13 @@ public async Task<IActionResult> ConfirmarTransaccion(TransaccionesViewModel vm,
     catch (Exception ex)
     {
         ModelState.AddModelError("", $"Error al registrar la transacción: {ex.Message}");
+        var productos = await _productosService.ListarTodos();
+        vm.Productos = productos;
         return View("Index", vm);
     }
 
     return RedirectToAction("Index");
 }
+
 
 }

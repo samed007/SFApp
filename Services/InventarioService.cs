@@ -14,7 +14,7 @@ namespace SFApp.Services
         Task Actualizar(InventarioDTO inventarioDto);
         Task Eliminar(int id);
         Task<int> ObtenerStock(int idProducto);
-        Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<InventarioDTO> productosDto);
+        Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<InventarioDTO> productosDto, string usuario);
         Task RegistrarDevolucion(string idTransaccion, string tipo, string? albaran, IEnumerable<InventarioDTO> productosDto);
          Task<IEnumerable<InventarioDTO>> ConsultarPorTransaccionId(string transaccionesId);
 
@@ -71,21 +71,21 @@ namespace SFApp.Services
             return await _inventarioDAO.ObtenerStock(idProducto);
         }
 
-        public async Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<InventarioDTO> productosDto)
+        public async Task RegistrarTransaccion(decimal importeTotal, string tipo, string? albaran, IEnumerable<InventarioDTO> productosDto, string usuario)
         {
-            // Mapear DTOs a la entidad Inventario
+            
             var productos = productosDto.Select(p => _mapper.Map<Inventario>(p));
 
-            // Llamar al método del DAO que ejecuta el SP
-            await _inventarioDAO.RegistrarTransaccion(importeTotal, tipo, albaran, productos);
+           
+            await _inventarioDAO.RegistrarTransaccion(importeTotal, tipo, albaran, productos, usuario);
         }
 
         public async Task RegistrarDevolucion(string idTransaccion, string tipo, string? albaran, IEnumerable<InventarioDTO> productosDto)
         {
-            // Mapear DTOs a la entidad Inventario
+            
             var productos = productosDto.Select(p => _mapper.Map<Inventario>(p));
 
-            // Llamar al método del DAO que ejecuta el SP de devoluciones
+            
             await _inventarioDAO.RegistrarDevolucion(idTransaccion, tipo, albaran, productos);
         }
 

@@ -8,6 +8,7 @@ namespace SFApp.DTOs
         public string? Albaran { get; set; }
         public string Tipo { get; set; } = "EN";
         public string IdTransaccion { get; set; }
+        public decimal Precio { get; set; }
         
     }
 }

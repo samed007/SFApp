@@ -1,0 +1,120 @@
+@model IEnumerable<SFApp.DTOs.ProductosDTO>
+@{
+    ViewData["Title"] = "Informe de Stock";
+
+    DateTime? fechaUsada = ViewBag.FechaDesde != null 
+        ? Convert.ToDateTime(ViewBag.FechaDesde) 
+        : null;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-info">📊 Informe de Stock</h2>
+
+    <div class="row mb-3">
+        <div class="col-md-8">
+            
+            <form asp-action="ObtenerStock" method="post" class="mb-0 d-flex g-2">
+                <div class="flex-grow-1 me-2">
+                    <label for="productoInput" class="form-label">Seleccione un producto</label>
+                    <input list="productosList" id="productoInput" name="idProducto" class="form-control" />
+                    <datalist id="productosList">
+                        @foreach (var p in ViewBag.Productos)
+                        {
+                            <option value="@p.IdProducto">@p.Producto - @p.Marca</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="align-self-end">
+                    <button type="submit" class="btn btn-primary mt-3">Consultar Stock</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-warning">@ViewBag.Mensaje</div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        
+        <table class="table table-bordered table-hover table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>EAN</th>
+                    <th>Precio Total</th>
+                    <th>Stock</th>
+                    <th>Última Venta</th>
+                    <th>Total Ventas</th>
+                    <th>Total Devoluciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.IdProducto</td>
+                        <td>@p.Producto</td>
+                        <td>@p.Marca</td>
+                        <td>@p.EAN</td>
+                        <td>@p.PrecioTotal.ToString("0.00") €</td>
+                        <td>@p.Stock</td>
+                        <td>@(p.UltimaFechaVenta.HasValue ? p.UltimaFechaVenta.Value.ToString("dd/MM/yyyy HH:mm") : "-")</td>
+                        <td>@p.TotalVentas</td>
+                        <td>@p.TotalDevoluciones</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        
+        @if (fechaUsada.HasValue)
+        {
+            <div class="mt-4">
+                <div class="alert alert-info">
+                    <p><strong>Ventas del día (@fechaUsada.Value.ToString("dd/MM/yyyy")):</strong> 
+                       @(Model.First().VentasDelDia.HasValue ? Model.First().VentasDelDia.Value : 0)</p>
+                    <p><strong>Ventas desde esa fecha hasta hoy:</strong> 
+                       @(Model.First().VentasDesdeFecha.HasValue ? Model.First().VentasDesdeFecha.Value : 0)</p>
+                </div>
+            </div>
+        }
+       @if (Model.First().VentasPorDia != null && Model.First().VentasPorDia.Any())
+{
+    <div class="mt-3 border p-2" style="max-height:250px; overflow-y:scroll;">
+        <p><strong>Ventas por día desde la fecha seleccionada:</strong></p>
+        <ul class="mb-0">
+            @foreach (var dia in Model.First().VentasPorDia)
+            {
+                <li>@dia.FechaVenta.ToString("dd/MM/yyyy"): @dia.Ventas ventas</li>
+            }
+        </ul>
+    </div>
+}
+
+
+
+        
+        <form asp-action="ObtenerStockPorFecha" method="post" class="mt-4 border rounded p-3 bg-light">
+            <h5 class="text-secondary">🔎 Consultar ventas desde una fecha</h5>
+
+            <input type="hidden" name="idProducto" value="@Model.First().IdProducto" />
+
+            <div class="mb-3">
+                <label class="form-label">Fecha desde</label>
+                <input type="date" name="fechaDesde" 
+                       class="form-control"
+                       value="@(fechaUsada.HasValue ? fechaUsada.Value.ToString("yyyy-MM-dd") : "")" />
+            </div>
+
+            <button type="submit" class="btn btn-success">Consultar por fecha</button>
+        </form>
+    }
+</div>
