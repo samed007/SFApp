@@ -9,6 +9,7 @@ namespace SFApp.DAOs
     public interface IProductosDAO
     {
         Task<Productos?> Consultar(int id);
+        Task<IEnumerable<Productos>> ListarTodosActivos();
         Task<IEnumerable<Productos>> ListarTodos();
         Task<IEnumerable<Productos>> ListarPorProducto(string producto);
         Task Agregar(Productos producto);
@@ -36,11 +37,19 @@ namespace SFApp.DAOs
             }
         }
 
-        public async Task<IEnumerable<Productos>> ListarTodos()
+        public async Task<IEnumerable<Productos>> ListarTodosActivos()
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 string sqlQuery = "SELECT * FROM Productos WHERE Estado='A'";
+                return await db.QueryAsync<Productos>(sqlQuery);
+            }
+        }
+           public async Task<IEnumerable<Productos>> ListarTodos()
+        {
+            using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string sqlQuery = "SELECT * FROM Productos";
                 return await db.QueryAsync<Productos>(sqlQuery);
             }
         }
@@ -87,7 +96,8 @@ namespace SFApp.DAOs
                     PrecioTotal = @PrecioTotal,
                     Categoria = @Categoria,
                     Talla = @Talla,
-                    Color = @Color
+                    Color = @Color,
+                    Estado = @Estado
                 WHERE IdProducto = @IdProducto";
        
 

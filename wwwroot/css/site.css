@@ -1,22 +1,205 @@
-html {
-  font-size: 14px;
+:root {
+    --primary-color: #489AD4;
+      --secondary-color: #224965;
+       --secondary-hover: #102432;
+    --primary-hover: #3b81bf;
+    --light-bg: #f0f9fb;
+    --table-hover: #e6f0fa;
 }
 
+/* Tipografía base */
+html {
+    font-size: 14px;
+}
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Contenedor principal */
+.container-caja {
+    background-color: var(--light-bg);
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* Títulos */
+.container-caja h3 {
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
-body {
-  margin-bottom: 60px;
+/* Botones personalizados */
+.btn {
+    background-color: var(--secondary-color) !important;
+    color: #fff !important;
+    border: none !important;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background-color: var(--secondary-hover) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Tabla */
+#tablaProductos th {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    font-weight: 500;
+}
+
+#tablaProductos td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Hover en filas de tabla */
+#tablaProductos tbody tr:hover {
+    background-color: var(--table-hover);
+    transition: background-color 0.3s ease;
+}
+
+/* Inputs y datalist */
+input[list], input[type="number"], input[type="text"] {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 6px 10px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(72, 154, 212, 0.25);
+    outline: none;
+}
+
+/* Total */
+#total {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Formulario de albarán */
+#confirmarTransaccionForm .form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Ajuste responsive del contenedor */
+@media (max-width: 576px) {
+    .container-caja {
+        padding: 15px;
+    }
+}
+ #tablaClientes th {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    #tablaClientes td {
+        vertical-align: middle;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    #tablaClientes tbody tr:hover {
+        background-color: var(--table-hover);
+        transition: background-color 0.3s ease;
+    }
+
+    /* Opcional: bordes redondeados suaves */
+    #tablaClientes {
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+       #tablaProductos th {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    #tablaProductos td {
+        vertical-align: middle;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    #tablaProductos tbody tr:hover {
+        background-color: var(--table-hover);
+        transition: background-color 0.3s ease;
+    }
+
+      #tablaDevolucion th {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    #tablaDevolucion td {
+        vertical-align: middle;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    #tablaDevolucion tbody tr:hover {
+        background-color: var(--table-hover);
+        transition: background-color 0.3s ease;
+    }
+  #tablaTransacciones th {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    #tablaTransacciones td {
+        vertical-align: middle;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    #tablaTransacciones tbody tr:hover {
+        background-color: var(--table-hover);
+        transition: background-color 0.3s ease;
+    }
+
+
+.pagination .page-item.active .page-link {
+    background: var(--secondary-color);
+    color: white;
+    font-weight: 700;
+}
+
+/* Tabla stock */
+#tablaStock th {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    font-weight: 500;
+}
+
+#tablaStock td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+#tablaStock tbody tr:hover {
+    background-color: var(--table-hover);
+    transition: background-color 0.3s ease;
 }

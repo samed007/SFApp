@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SFApp.DTOs;
 using SFApp.Services;
 
@@ -55,25 +56,63 @@ public async Task<IActionResult> Editar(int idProducto)
     return View(producto);
 }
 
-
 [HttpPost]
 public async Task<IActionResult> Editar(ProductosDTO producto)
 {
     if (!ModelState.IsValid)
     {
-        foreach (var key in ModelState.Keys)
+        // Recopilar todos los errores de validación y pasarlos a TempData para el modal
+        var errors = ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+
+        if (errors.Any())
         {
-            var errors = ModelState[key].Errors;
-            if (errors.Count > 0)
-            {
-                Console.WriteLine($"{key}: {string.Join(", ", errors.Select(e => e.ErrorMessage))}");
-            }
+            TempData["ErrorMessage"] = string.Join("\n", errors);
         }
+
+        // Volver a mostrar la vista con el producto y la lista de estados
+        ViewBag.Estados = new SelectList(
+            new List<SelectListItem>
+            {
+                new SelectListItem { Value = "A", Text = "Activo" },
+                new SelectListItem { Value = "I", Text = "Inactivo" }
+            },
+            "Value",
+            "Text",
+            producto.Estado
+        );
+
         return View(producto);
     }
 
-    await _productosService.Actualizar(producto);
-    TempData["SuccessMessage"] = "Producto actualizado correctamente.";
+    try
+    {
+        await _productosService.Actualizar(producto);
+        TempData["SuccessMessage"] = "Producto actualizado correctamente.";
+    }
+    catch (Exception ex)
+    {
+        // Captura errores de base de datos u otros
+        TempData["ErrorMessage"] = $"Error al actualizar el producto: {ex.Message}";
+        
+        // Volver a mostrar la vista con el producto y la lista de estados
+       ViewBag.Estados = new SelectList(
+            new List<SelectListItem>
+            {
+                new SelectListItem { Value = "A", Text = "Activo" },
+                new SelectListItem { Value = "I", Text = "Inactivo" }
+            },
+            "Value",
+            "Text",
+            producto.Estado
+        );
+
+
+        return View(producto);
+    }
+
     return RedirectToAction("Index");
 }
 

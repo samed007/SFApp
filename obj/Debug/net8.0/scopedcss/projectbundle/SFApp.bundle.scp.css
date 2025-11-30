@@ -8,8 +8,9 @@ a.navbar-brand[b-3uybifpuoc] {
   word-break: break-all;
 }
 
+
 a[b-3uybifpuoc] {
-  color: #0077cc;
+  color: #ffffff;
 }
 
 .btn-primary[b-3uybifpuoc] {
@@ -41,9 +42,27 @@ button.accept-policy[b-3uybifpuoc] {
 }
 
 .footer[b-3uybifpuoc] {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  font-size: 18px !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 60px;
+    padding-left: 60px;
+}
+
+.container[b-3uybifpuoc]{
+  margin-bottom: 50px;
+}
+
+.footer a[b-3uybifpuoc]{
+ text-decoration: none;
+ color: rgb(252, 48, 198);
 }

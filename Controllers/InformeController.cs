@@ -18,7 +18,7 @@ namespace SFApp.Controllers
       
        public async Task<IActionResult> Index()
         {
-            var productos = await _productosService.ListarTodos();
+            var productos = await _productosService.ListarTodosActivos();
             ViewBag.Productos = productos;
             return View(new List<ProductosDTO>());
         }
@@ -28,7 +28,7 @@ namespace SFApp.Controllers
     {
         var producto = await _productosService.ObtenerStockPorProducto(idProducto, null);
 
-        var productos = await _productosService.ListarTodos();
+        var productos = await _productosService.ListarTodosActivos();
         ViewBag.Productos = productos;
 
         if (producto == null)
@@ -42,13 +42,22 @@ namespace SFApp.Controllers
 
   
       [HttpPost]
-        public async Task<IActionResult> ObtenerStockPorFecha(int idProducto, DateTime fechaDesde)
+        public async Task<IActionResult> ObtenerStockPorFecha(int idProducto, DateTime? fechaDesde)
+        
         {
+
+                        
+                if (!fechaDesde.HasValue)
+                    fechaDesde = DateTime.Today;
+
+                
+                if (fechaDesde.Value.Year < 1753)
+                    fechaDesde = DateTime.Today;
             
             var producto = await _productosService.ObtenerStockPorProducto(idProducto, fechaDesde);
 
             
-            var productos = await _productosService.ListarTodos();
+            var productos = await _productosService.ListarTodosActivos();
             ViewBag.Productos = productos;
 
             

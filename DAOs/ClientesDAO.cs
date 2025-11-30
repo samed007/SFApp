@@ -38,7 +38,7 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string sqlQuery = "SELECT * FROM Clientes WHERE Estado='A'";
+                string sqlQuery = "SELECT * FROM Clientes";
                 return await db.QueryAsync<Clientes>(sqlQuery);
             }
         }

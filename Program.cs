@@ -75,9 +75,20 @@ app.UseAuthorization();
 // -----------------------
 // Rutas
 // -----------------------
+// Ruta para la raíz del sitio: va directo al Login
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Auth/Login");
+    return Task.CompletedTask;
+});
+
+// Rutas normales del MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=Login}/{id?}");
 
 
+
 app.Run();
+
+

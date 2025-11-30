@@ -4,19 +4,18 @@
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<div class="container mt-4">
-    <h2 class="mb-4 text-success">➕ Agregar Producto</h2>
+<div class="container-caja mt-4">
+    <h2 class="mb-4 text-success">Agregar Producto</h2>
 
     <form asp-action="Agregar" method="post" asp-controller="Producto">
         <div class="mb-3">
             <label asp-for="Producto" class="form-label"></label>
-            <input asp-for="Producto" class="form-control" name="producto.Producto" />
+            <input asp-for="Producto" class="form-control" name="producto.Producto" required />
         </div>
 
         <div class="mb-3">
             <label asp-for="Marca" class="form-label"></label>
-            <input asp-for="Marca" class="form-control" name="producto.Marca" />
+            <input asp-for="Marca" class="form-control" name="producto.Marca" required />
         </div>
 
         <div class="mb-3">
@@ -46,7 +45,7 @@
 
         <div class="mb-3">
             <label asp-for="PrecioTotal" class="form-label"></label>
-            <input asp-for="PrecioTotal" class="form-control" type="number" step="0.01" lang="en" name="producto.PrecioTotal" />
+            <input asp-for="PrecioTotal" class="form-control" type="number" step="0.01" lang="en" name="producto.PrecioTotal" required/>
         </div>
 
         <div class="mb-3">
@@ -63,8 +62,55 @@
             <label asp-for="Color" class="form-label"></label>
             <input asp-for="Color" class="form-control" name="producto.Color" />
         </div>
+      <div class="mb-3">
+            <label asp-for="Estado" class="form-label"></label>
+            <select asp-for="Estado" class="form-select" required name="producto.Estado">
+                <option value="">-- Selecciona un estado --</option>
+                <option value="A">Activo</option>
+                <option value="I">Inactivo</option>
+            </select>
+        </div>
 
-        <button type="submit" class="btn btn-success">💾 Guardar</button>
+
+
+        <button type="submit" class="btn btn-agregar">Guardar</button>
         <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+<!-- Modal de feedback -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedbackModalLabel">Mensaje</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p id="feedbackMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const successMessage = '@TempData["SuccessMessage"]';
+        const errorMessage = '@TempData["ErrorMessage"]';
+
+        let message = "";
+        if (successMessage) {
+            message = successMessage;
+        } else if (errorMessage) {
+            message = errorMessage;
+        }
+
+        if (message) {
+            document.getElementById("feedbackMessage").textContent = message;
+            const feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+            feedbackModal.show();
+        }
+    });
+</script>

@@ -35,7 +35,7 @@ public class DevolucionController : Controller
         var totalRecords = todas.Count();
 
         var transaccionesPaginadas = todas
-            .OrderByDescending(t => t.Fecha)
+            
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize);
 
@@ -72,7 +72,7 @@ public class DevolucionController : Controller
         bool permiteCancelar = !esDevolucion;
         bool esEditable = !esDevolucion;
 
-        var productos = await _productoService.ListarTodos();
+        var productos = await _productoService.ListarTodosActivos();
         ViewBag.Productos = productos;
         ViewBag.EsDevolucion = esDevolucion;
         ViewBag.PermiteCancelar = permiteCancelar;
@@ -120,7 +120,7 @@ public async Task<IActionResult> GuardarCambios(
     if (Inventarios == null || Inventarios.Count == 0)
         return BadRequest("No hay productos para procesar.");
 
-    var productosValidos = await _productoService.ListarTodos();
+    var productosValidos = await _productoService.ListarTodosActivos();
     foreach (var item in Inventarios)
     {
         var prod = productosValidos.FirstOrDefault(p => p.IdProducto == item.IdProducto);

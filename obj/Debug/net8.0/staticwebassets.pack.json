@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\SFApp.bundle.scp.css"
     },
     {
+      "Id": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\wwwroot\\assets\\logo.jpg",
+      "PackagePath": "staticwebassets\\assets\\logo.jpg"
+    },
+    {
       "Id": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

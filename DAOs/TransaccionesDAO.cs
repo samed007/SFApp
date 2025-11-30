@@ -41,7 +41,8 @@ namespace SFApp.DAOs
         {
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string sqlQuery = "SELECT * FROM Transacciones WHERE Estado='A'";
+                string sqlQuery = "SELECT * FROM Transacciones WHERE Estado='A' ORDER BY Id DESC";
+
                 return await db.QueryAsync<Transacciones>(sqlQuery);
             }
         }

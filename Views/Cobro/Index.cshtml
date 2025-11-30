@@ -1,124 +1,45 @@
 @model SFApp.ViewModels.TransaccionesViewModel
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
 
-:root {
-    --azul-oscuro: #004D61;
-    --turquesa: #009CA6;
-    --verde-agua: #00BFA5;
-    --gris-claro: #F5F5F5;
-}
-
-body {
-    background-color: var(--gris-claro);
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-.container-caja {
-    max-width: 1000px;
-    margin: 40px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-h3 {
-    margin-top: 30px;
-    color: var(--azul-oscuro);
-    border-bottom: 2px solid var(--verde-agua);
-    padding-bottom: 8px;
-}
-
-label {
-    font-weight: bold;
-    color: var(--azul-oscuro);
-}
-
-input[list],
-input[type="number"],
-button {
-    border-radius: 8px;
-}
-
-input[list]:focus,
-input[type="number"]:focus {
-    outline: none;
-    border-color: var(--turquesa);
-    box-shadow: 0 0 5px rgba(0,156,166,0.4);
-}
-
-.btn-agregar {
-    background-color: var(--turquesa);
-    color: white;
-    font-weight: 600;
-}
-
-.btn-agregar:hover {
-    background-color: var(--verde-agua);
-}
-
-#tablaProductos th {
-    background-color: var(--turquesa);
-    color: white;
-    text-align: center;
-}
-
-#tablaProductos td {
-    text-align: center;
-}
-
-.eliminarBtn {
-    background-color: #ff5252;
-    color: white;
-}
-
-.eliminarBtn:hover {
-    background-color: #e53935;
-}
-
-#total {
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--turquesa);
-}
-
-#confirmarTransaccionForm button {
-    background-color: var(--azul-oscuro);
-    color: white;
-}
-
-#confirmarTransaccionForm button:hover {
-    background-color: #00677e;
-}
-</style>
 
 <div class="container-caja">
-    <div class="row g-3">
+    <div class="row g-3 mb-3">
         <div class="col-md-6">
             <label>Producto:</label>
-            <input list="productos" id="productoSeleccionado" class="form-control" placeholder="Selecciona un producto..." />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-box"></i></span>
+                <input list="productos" id="productoSeleccionado" class="form-control" placeholder="Selecciona un producto..." />
+            </div>
             <datalist id="productos">
                 @foreach (var producto in Model.Productos)
                 {
-                    <option value="@producto.IdProducto" data-nombre="@producto.Producto" data-marca="@producto.Marca" data-precio="@producto.PrecioTotal">
+                    <option 
+                        value="@producto.IdProducto"
+                        data-nombre="@producto.Producto"
+                        data-marca="@producto.Marca"
+                        data-precio="@producto.PrecioTotal.ToString("0.00")">
                         @producto.Producto - @producto.Marca
                     </option>
                 }
             </datalist>
         </div>
+
         <div class="col-md-3">
             <label>Cantidad:</label>
-            <input type="number" id="cantidad" value="1" min="1" class="form-control" />
+            <input type="number" id="cantidad" value="1" min="1" class="form-control"/>
         </div>
-        <div class="col-md-3 d-flex align-items-end">
+
+        <div class="col-md-3 d-flex align-items-end gap-2">
             <button type="button" id="agregarBtn" class="btn btn-agregar w-100">Agregar</button>
+            <button type="button" id="limpiarBtn" class="btn btn-danger w-100">Limpiar</button>
         </div>
     </div>
 
     <h3>Productos seleccionados:</h3>
+
     <div class="table-responsive">
         <table class="table table-bordered" id="tablaProductos">
             <thead>
@@ -136,16 +57,41 @@ input[type="number"]:focus {
         </table>
     </div>
 
-    <p class="text-end"><strong>Total:</strong> <span id="total">0</span></p>
+    <p class="text-end me-3"><strong>Total:</strong> <span id="total">0 €</span></p>
 
-    
     <form id="confirmarTransaccionForm" asp-action="ConfirmarTransaccion" method="post">
-        <button type="submit" class="btn w-100 mt-3">✅ Confirmar Transacción</button>
+        <button type="submit" class="btn w-100 mt-3">Confirmar Transacción</button>
     </form>
 </div>
 
+<div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
+<!-- Modal de feedback -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedbackModalLabel">Mensaje</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p id="feedbackMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
 let productosSeleccionados = [];
+
+function flashElement(el){
+    if(!el) return;
+    el.classList.add("flash");
+    setTimeout(() => el.classList.remove("flash"), 500);
+}
 
 function actualizarTabla() {
     const tbody = document.querySelector("#tablaProductos tbody");
@@ -157,29 +103,32 @@ function actualizarTabla() {
         total += subtotal;
 
         const row = document.createElement("tr");
+        row.classList.add("added");
         row.innerHTML = `
             <td>${p.id}</td>
             <td>${p.nombre}</td>
             <td>${p.marca}</td>
-            <td>${p.precio.toFixed(2)}</td>
+            <td class="subtotalAnim">${p.precio.toFixed(2)} €</td>
             <td><input type="number" value="${p.cantidad}" min="0" data-index="${index}" class="form-control cantidadInput"/></td>
-            <td>${subtotal.toFixed(2)}</td>
+            <td class="subtotalAnim">${subtotal.toFixed(2)} €</td>
             <td><button type="button" class="btn eliminarBtn" data-index="${index}">Eliminar</button></td>
         `;
         tbody.appendChild(row);
     });
 
-    document.getElementById("total").innerText = total.toFixed(2);
+    const totalEl = document.getElementById("total");
+    totalEl.innerText = total.toFixed(2) + " €";
+    flashElement(totalEl);
 
     document.querySelectorAll(".cantidadInput").forEach(input => {
         input.addEventListener("change", (e) => {
             const idx = e.target.dataset.index;
             const nuevaCantidad = parseInt(e.target.value);
             if (nuevaCantidad <= 0) {
+                const nombreEliminado = productosSeleccionados[idx].nombre;
                 productosSeleccionados.splice(idx, 1);
-            } else {
-                productosSeleccionados[idx].cantidad = nuevaCantidad;
-            }
+                showToast(`Producto "${nombreEliminado}" eliminado`);
+            } else { productosSeleccionados[idx].cantidad = nuevaCantidad; }
             actualizarTabla();
         });
     });
@@ -187,10 +136,28 @@ function actualizarTabla() {
     document.querySelectorAll(".eliminarBtn").forEach(btn => {
         btn.addEventListener("click", (e) => {
             const idx = e.target.dataset.index;
+            const nombreEliminado = productosSeleccionados[idx].nombre;
             productosSeleccionados.splice(idx, 1);
             actualizarTabla();
+            showToast(`Producto "${nombreEliminado}" eliminado`);
         });
     });
+
+    document.querySelectorAll(".subtotalAnim").forEach(td => flashElement(td));
+}
+
+function showToast(message) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.classList.add('toast-message');
+    toast.innerText = message;
+    container.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('show'), 50);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => container.removeChild(toast), 400);
+    }, 2500);
 }
 
 document.getElementById("agregarBtn").addEventListener("click", () => {
@@ -216,6 +183,16 @@ document.getElementById("agregarBtn").addEventListener("click", () => {
     actualizarTabla();
     document.getElementById("productoSeleccionado").value = "";
     document.getElementById("cantidad").value = 1;
+    showToast(`Producto "${nombre}" agregado`);
+});
+
+document.getElementById("limpiarBtn").addEventListener("click", () => {
+    if(productosSeleccionados.length === 0) return;
+    if(confirm("¿Deseas limpiar todos los productos seleccionados?")) {
+        productosSeleccionados = [];
+        actualizarTabla();
+        showToast("Todos los productos fueron eliminados");
+    }
 });
 
 const form = document.getElementById("confirmarTransaccionForm");
@@ -239,3 +216,23 @@ form.addEventListener("submit", (e) => {
     });
 });
 </script>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Convertimos el mensaje en una cadena segura sin romper el HTML ni imprimirlo fuera del script
+            const msg = "@(TempData["SuccessMessage"]?.ToString().Replace("\\", "\\\\").Replace("\"", "\\\""))";
+
+            // Insertar en el modal
+            document.getElementById("feedbackMessage").innerText = msg;
+
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+            modal.show();
+        });
+    </script>
+}
+
+

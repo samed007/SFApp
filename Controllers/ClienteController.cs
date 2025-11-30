@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SFApp.DTOs;
 using SFApp.Services;
 
@@ -42,8 +43,7 @@ namespace SFApp.Controllers
             return RedirectToAction("Index");
         }
 
-       
-        public async Task<IActionResult> Editar(int idCliente)
+       public async Task<IActionResult> Editar(int idCliente)
         {
             var cliente = await _clientesService.Consultar(idCliente);
             if (cliente == null)
@@ -51,8 +51,22 @@ namespace SFApp.Controllers
                 TempData["ErrorMessage"] = "Cliente no encontrado.";
                 return RedirectToAction("Index");
             }
+
+            // Lista de estados
+            ViewBag.Estados = new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "A", Text = "Activo" },
+                    new SelectListItem { Value = "I", Text = "Inactivo" }
+                },
+                "Value",
+                "Text",
+                cliente.Estado // Selecciona automáticamente
+            );
+
             return View(cliente);
         }
+
             [HttpPost]
             public async Task<IActionResult> Editar(ClientesDTO cliente)
             {
@@ -76,11 +90,23 @@ namespace SFApp.Controllers
             }
 
                             
-            public IActionResult Agregar()
-            {
-                
-                return View(new ClientesDTO());
-            }
+        public IActionResult Agregar()
+        {
+            // Crear lista de estados con valor por defecto
+            ViewBag.Estados = new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "A", Text = "Activo" },
+                    new SelectListItem { Value = "I", Text = "Inactivo" }
+                },
+                "Value",
+                "Text",
+                "A" // Activo por defecto
+            );
+
+            return View(new ClientesDTO());
+        }
+
 
             
             [HttpPost]

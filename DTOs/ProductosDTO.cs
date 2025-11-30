@@ -29,6 +29,7 @@ namespace SFApp.DTOs
         public int Stock { get; set; }
 
         
+        public string? Estado { get; set; }
         public DateTime? UltimaFechaVenta { get; set; }
 
         

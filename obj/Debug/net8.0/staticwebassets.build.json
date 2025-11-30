@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bwW3jxVszXaZUEmiADTRACPLu66psbR2r2gYRiaDfb0=",
+  "Hash": "VcrkDwrd9SsnbeLGKDyPk4oL0ApyOMRknqP4inthxGE=",
   "Source": "SFApp",
   "BasePath": "_content/SFApp",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SFApp.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\wwwroot\\assets\\logo.jpg",
+      "SourceId": "SFApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\wwwroot\\",
+      "BasePath": "_content/SFApp",
+      "RelativePath": "assets/logo.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\logo.jpg"
     },
     {
       "Identity": "C:\\PROYECTOS SUPER SERIOS\\SFApp\\SFApp\\wwwroot\\css\\site.css",

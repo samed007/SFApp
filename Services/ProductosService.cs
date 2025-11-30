@@ -8,6 +8,7 @@ namespace SFApp.Services
     public interface IProductosService
     {
         Task<ProductosDTO?> Consultar(int id);
+        Task<IEnumerable<ProductosDTO>> ListarTodosActivos();
         Task<IEnumerable<ProductosDTO>> ListarTodos();
         Task<IEnumerable<ProductosDTO>> ListarPorProducto(string producto);
         Task Agregar(ProductosDTO productoDto);
@@ -36,11 +37,18 @@ namespace SFApp.Services
             return _mapper.Map<ProductosDTO?>(producto);
         }
 
+        public async Task<IEnumerable<ProductosDTO>> ListarTodosActivos()
+        {
+            var productos = await _productosDAO.ListarTodosActivos();
+            return _mapper.Map<IEnumerable<ProductosDTO>>(productos);
+        }
+        
         public async Task<IEnumerable<ProductosDTO>> ListarTodos()
         {
             var productos = await _productosDAO.ListarTodos();
             return _mapper.Map<IEnumerable<ProductosDTO>>(productos);
         }
+
 
         public async Task<IEnumerable<ProductosDTO>> ListarPorProducto(string producto)
         {

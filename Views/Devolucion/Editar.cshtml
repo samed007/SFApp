@@ -10,11 +10,11 @@
     bool esDevolucion = ViewBag.EsDevolucion ?? false;
     bool permiteCancelar = ViewBag.PermiteCancelar ?? false;
 }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="container mt-4 p-4 bg-light rounded shadow">
-    <h2 class="text-center mb-4 text-primary fw-bold">Editar Transaccion @idTransaccion @tipo</h2>
+<div class="container-caja mt-4">
+    <h2 class="mb-4">Editar Transacción @idTransaccion (@tipo)</h2>
 
     <form id="guardarForm" asp-action="GuardarCambios" asp-controller="Devolucion" method="post">
         <input type="hidden" name="IdTransaccion" value="@idTransaccion" />
@@ -24,7 +24,7 @@
         {
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <label for="albaran" class="form-label fw-semibold">Nº Albarán</label>
+                    <label for="albaran" class="form-label">Nº Albarán</label>
                     <input type="text" id="albaran" name="Albaran" class="form-control"
                         value="@(ViewBag.Albaran ?? "")"
                         placeholder="Introduce el albarán"
@@ -35,10 +35,9 @@
 
         @if (esEditable)
         {
-            
             <div class="row g-3 align-items-end mb-3">
                 <div class="col-md-5">
-                    <label for="productoId" class="form-label fw-semibold">Producto</label>
+                    <label for="productoId" class="form-label">Producto</label>
                     <input list="listaProductos" id="productoId" class="form-control" placeholder="ID o nombre del producto" />
                     <datalist id="listaProductos">
                         @foreach (var p in productos)
@@ -50,74 +49,91 @@
                                     data-marca="@p.Marca">
                                 @p.Producto
                             </option>
-
                         }
                     </datalist>
                 </div>
 
                 <div class="col-md-2">
-                    <label for="cantidad" class="form-label fw-semibold">Cantidad</label>
+                    <label for="cantidad" class="form-label">Cantidad</label>
                     <input type="number" id="cantidad" class="form-control" value="1" min="1" />
                 </div>
 
                 <div class="col-md-2 text-end">
-                    <button type="button" id="agregarBtn" class="btn btn-primary w-100 mt-2">➕ Añadir</button>
+                    <button type="button" id="agregarBtn" class="btn btn-agregar w-100 mt-2">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
                 </div>
             </div>
         }
 
         <hr />
 
-        
-        <table class="table table-hover table-bordered align-middle mt-3" id="tablaDevolucion">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID Producto</th>
-                    <th>Cantidad</th>
-                    @if (esEditable)
-                    {
-                        <th style="width: 90px;">Acciones</th>
-                    }
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle" id="tablaDevolucion">
+                <thead>
+                    <tr>
+                        <th>ID Producto</th>
+                        <th>Cantidad</th>
+                        @if (esEditable)
+                        {
+                            <th style="width: 90px;">Acciones</th>
+                        }
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="text-end fw-bold mt-3">
+            Total: <span id="totalImporte">0.00</span> €
+        </div>
 
         <div class="text-center mt-4">
             @if (esEditable)
             {
-                <button type="button" class="btn btn-info px-4 me-2" id="btnDevolver">💫 Generar Devolución</button>
-                <button type="submit" class="btn btn-success px-4 me-2">💾 Guardar</button>
+                <button type="button" class="btn  px-4 me-2" id="btnDevolver" title="Devolución">
+                    <i class="bi bi-arrow-left-right"></i>
+                </button>
+
+                <button type="submit" class="btn  px-4 me-2" title="Guardar">
+                    <i class="bi bi-save"></i>
+                </button>
 
                 @if (permiteCancelar)
                 {
-                    <button type="submit" name="accion" value="CANCEL" class="btn btn-danger px-4 me-2"
+                    <button type="submit" name="accion" title="Cancelar" value="CANCEL" class="btn  px-4 me-2"
                             onclick="return confirm('¿Seguro que deseas cancelar esta transacción por completo?');">
-                        ❌ Cancelar
+                        <i class="bi bi-x-lg"></i>
                     </button>
                 }
             }
             else if (esDevolucion)
             {
-                <button type="button" class="btn btn-warning px-4 me-2" id="btnRevertir">↩ Cancelar Devolución</button>
+                <button type="button" class="btn  px-4 me-2" id="btnRevertir" title="Revertir">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </button>
             }
             else
             {
                 <div class="alert alert-info mt-3">
-                    🔒 Esta transacción es de tipo <strong>@tipo</strong> y no puede ser modificada.
+                    <i class="bi bi-lock-fill"></i> Esta transacción es de tipo <strong>@tipo</strong> y no puede ser modificada.
                 </div>
             }
 
-            <a href="@Url.Action("Index", "Devolucion")" class="btn btn-secondary px-4">⬅ Volver</a>
+            <a href="@Url.Action("Index", "Devolucion")" class="btn btn-secondary px-4" title="Volver">
+                <i class="bi bi-arrow-left"></i>
+            </a>
         </div>
     </form>
 </div>
-
 <script>
+/* --- Manteniendo toda la funcionalidad original --- */
 let productos = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
 const esEditable = @esEditable.ToString().ToLower();
 const esDevolucion = @esDevolucion.ToString().ToLower();
 
+/* Resto del script intacto tal como lo tenías */
 productos = productos.map(p => {
     const option = Array.from(document.querySelectorAll("#listaProductos option"))
                         .find(o => parseInt(o.value.split("-")[0].trim()) === p.IdProducto);
@@ -136,11 +152,9 @@ totalContainer.classList.add("text-end", "fw-bold", "mt-3");
 totalContainer.innerHTML = `Total: <span id="totalImporte">0.00</span> €`;
 document.querySelector(".container").appendChild(totalContainer);
 
-
 function getTipoTransaccion() {
-    return document.getElementById("Tipo").value; // EN, DE, VE, DV
+    return document.getElementById("Tipo").value;
 }
-
 
 function calcularTotal() {
     const tipoTransaccion = getTipoTransaccion();
@@ -151,7 +165,6 @@ function calcularTotal() {
     });
     document.getElementById("totalImporte").innerText = total.toFixed(2);
 }
-
 
 function renderTabla() {
     const tbody = document.querySelector("#tablaDevolucion tbody");
@@ -174,13 +187,12 @@ function renderTabla() {
             </td>
             ${esEditable ? `
             <td class="text-center">
-                <button type="button" class="btn btn-outline-danger btn-sm eliminarBtn" data-index="${i}">🗑</button>
+                <button type="button" class="btn btn-outline-danger btn-sm eliminarBtn" data-index="${i}"><i class="bi bi-trash"></i></button>
             </td>` : ""}
             <td>${subtotal}</td>
         `;
         tbody.appendChild(row);
 
-        
         if (esEditable) {
             const inputCantidad = row.querySelector("input[name^='Inventarios']");
             inputCantidad.addEventListener("change", e => {
@@ -188,7 +200,7 @@ function renderTabla() {
                 if (!isNaN(nuevaCantidad) && nuevaCantidad > 0) {
                     productos[i].Cantidad = nuevaCantidad;
                 } else {
-                    e.target.value = productos[i].Cantidad; 
+                    e.target.value = productos[i].Cantidad;
                 }
                 calcularTotal();
             });
@@ -208,7 +220,6 @@ function renderTabla() {
 
     calcularTotal();
 }
-
 
 if (esEditable) {
     document.getElementById("agregarBtn").addEventListener("click", () => {
@@ -249,7 +260,6 @@ if (esEditable) {
         document.getElementById("guardarForm").submit();
     });
 }
-
 
 if (esDevolucion) {
     document.getElementById("btnRevertir").addEventListener("click", () => {

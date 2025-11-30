@@ -23,7 +23,7 @@ public class CobroController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var productos = await _productosService.ListarTodos();
+        var productos = await _productosService.ListarTodosActivos();
 
         var vm = new TransaccionesViewModel
         {
@@ -36,7 +36,7 @@ public class CobroController : Controller
 [HttpPost]
 public async Task<IActionResult> AgregarProducto(TransaccionesViewModel vm)
 {
-    var productos = await _productosService.ListarTodos();
+    var productos = await _productosService.ListarTodosActivos();
     vm.Productos = productos;
 
     if (!int.TryParse(vm.ProductoSeleccionado, out int idProducto))
@@ -115,7 +115,7 @@ public async Task<IActionResult> ConfirmarTransaccion(TransaccionesViewModel vm)
             usuario: codigoUsuario
         );
 
-        TempData["SuccessMessage"] = "✅ Transacción registrada y stock actualizado.";
+        TempData["SuccessMessage"] = "Transacción registrada y stock actualizado.";
     }
     catch (Exception ex)
     {

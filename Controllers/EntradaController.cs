@@ -21,7 +21,7 @@ public class EntradaController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var productos = await _productosService.ListarTodos();
+        var productos = await _productosService.ListarTodosActivos();
 
         var vm = new TransaccionesViewModel
         {
@@ -34,7 +34,7 @@ public class EntradaController : Controller
 [HttpPost]
 public async Task<IActionResult> AgregarProducto(TransaccionesViewModel vm)
 {
-    var productos = await _productosService.ListarTodos();
+    var productos = await _productosService.ListarTodosActivos();
     vm.Productos = productos;
 
     if (!int.TryParse(vm.ProductoSeleccionado, out int idProducto))
@@ -87,7 +87,7 @@ public async Task<IActionResult> ConfirmarTransaccion(TransaccionesViewModel vm,
     if (!vm.ProductosSeleccionados.Any())
     {
         ModelState.AddModelError("", "No hay productos seleccionados.");
-        var productos = await _productosService.ListarTodos();
+        var productos = await _productosService.ListarTodosActivos();
         vm.Productos = productos;
         return View("Index", vm);
     }
@@ -120,7 +120,7 @@ public async Task<IActionResult> ConfirmarTransaccion(TransaccionesViewModel vm,
     catch (Exception ex)
     {
         ModelState.AddModelError("", $"Error al registrar la transacción: {ex.Message}");
-        var productos = await _productosService.ListarTodos();
+        var productos = await _productosService.ListarTodosActivos();
         vm.Productos = productos;
         return View("Index", vm);
     }
