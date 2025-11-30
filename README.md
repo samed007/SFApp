@@ -190,7 +190,7 @@ Procedimientos almacenados:
 
 ## Autor
 
-Tu Nombre  
+Christian Edgardo Perez Vera  
 Desarrollador del sistema SurferPets.
 
 ---
