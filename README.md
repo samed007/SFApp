@@ -1,6 +1,5 @@
-# 🐾 SurferPets – Mini ERP  
-**Gestión de Productos · Inventario · Ventas · Entradas · Devoluciones**
-
+# SurferPets – Mini ERP  
+Gestión de Productos · Inventario · Ventas · Entradas · Devoluciones
 
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-8.0-blue" alt=".NET 8" />
@@ -11,29 +10,31 @@
 
 ---
 
-## 📌 Índice
+## Índice
 
-- [Descripción](#-descripción)
-- [Estado del proyecto](#-estado-del-proyecto)
-- [Funcionalidades](#-funcionalidades-principales)
-- [Tecnologías](#-tecnologías-utilizadas)
-- [Instalación y configuración](#-instalación-y-configuración)
-- [Uso básico](#-uso-básico)
-- [Estructura del proyecto](#-estructura-del-proyecto)
-- [Endpoints](#-endpoints--rutas-principales)
-- [Base de datos y SPs](#-base-de-datos-y-sps)
-- [Autor](#-autor)
-- [Licencia](#-licencia)
-- [Futuras mejoras](#-futuras-mejoras)
-- [FAQ](#-faq)
+- [Descripción](#descripción)
+- [Estado del proyecto](#estado-del-proyecto)
+- [Funcionalidades principales](#funcionalidades-principales)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Instalación y configuración](#instalación-y-configuración)
+- [Importar base de datos (.bak)](#importar-base-de-datos-bak)
+- [Credenciales](#credenciales)
+- [Uso básico](#uso-básico)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Endpoints - Rutas principales](#endpoints---rutas-principales)
+- [Base de datos y SPs](#base-de-datos-y-sps)
+- [Autor](#autor)
+- [Licencia](#licencia)
+- [Futuras mejoras](#futuras-mejoras)
+- [FAQ](#faq)
 
 ---
 
-## 📝 Descripción
+## Descripción
 
-**SurferPets** es un mini ERP desarrollado en **ASP.NET Core 8 MVC** con **SQL Server**, pensado para la gestión interna de un punto de venta.  
+SurferPets es un mini ERP desarrollado en ASP.NET Core 8 MVC con SQL Server, pensado para la gestión interna de un punto de venta.
 
-Permite administrar:
+Incluye módulos de:
 
 - Productos  
 - Clientes  
@@ -43,18 +44,16 @@ Permite administrar:
 - Devoluciones  
 - Informes  
 
-Ideal para negocios pequeños que necesiten control total del stock sin sistemas complejos.
+---
+
+## Estado del proyecto
+
+Versión funcional (backend, frontend, base de datos y transacciones).  
+En desarrollo mejoras como tickets, código de barras, dashboard, etc.
 
 ---
 
-## 🚧 Estado del proyecto
-
-✔ **Versión funcional** (backend, frontend, base de datos y transacciones).  
-⚠ En desarrollo: mejoras futuras como tickets, código de barras, dashboard, etc.
-
----
-
-## 🔧 Funcionalidades principales
+## Funcionalidades principales
 
 - Gestión de productos (crear, editar, activar/inactivar)
 - Gestión de clientes
@@ -68,7 +67,7 @@ Ideal para negocios pequeños que necesiten control total del stock sin sistemas
 
 ---
 
-## 🛠 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 | Área        | Tecnologías |
 |------------|-------------|
@@ -81,73 +80,59 @@ Ideal para negocios pequeños que necesiten control total del stock sin sistemas
 
 ---
 
-## 📦 Instalación y configuración
+## Instalación y configuración
 
 ### 1. Clonar repositorio
 
 ```bash
 git clone https://github.com/samed007/SFApp.git
-2. Crear base de datos
-En SQL Server Management Studio (SSMS):
+```
 
-sql
-Copiar código
-CREATE DATABASE SurferPets;
-GO
-Luego ejecuta los scripts del proyecto:
+---
 
-Tablas
+## Importar base de datos (.bak)
 
-Vistas (vst_Inventario, vst_modInventario)
+Si ya tienes el archivo `SurferPets.bak`, no necesitas crear la base de datos manualmente.
 
-Tipos (TipoProductos)
+### 1. Abrir SQL Server Management Studio (SSMS)
+### 2. Clic derecho en **Databases**
+### 3. Seleccionar **Restore Database**
+### 4. Elegir **Device** → agregar el archivo `.bak`
+### 5. Seleccionar el archivo `SurferPets.bak`
+### 6. Aceptar para restaurar
 
-Procedimientos almacenados
+La base de datos queda lista con tablas, vistas, tipos y SPs preinstalados.
 
-3. Configurar la conexión SQL
-Editar appsettings.json:
+---
 
-json
-Copiar código
-"ConnectionStrings": {
-  "DefaultConnection": "Server=TU_SERVIDOR;Database=SurferPets;Trusted_Connection=True;TrustServerCertificate=True;"
-}
-Ejemplos de servidores:
+## Credenciales
 
-(localdb)\\MSSQLLocalDB
+### Administrador
+Usuario: admin  
+Clave: 123456  
 
-localhost\\SQLEXPRESS
+### Usuario estándar  
+Usuario: user  
+Clave: 123456  
 
-192.168.1.100
+---
 
-4. Restaurar paquetes y ejecutar
-En Visual Studio:
+## Uso básico
 
-Tools → NuGet Package Manager → Restore Packages
+### Administrador
+- Crear y editar productos  
+- Registrar entradas  
 
-Luego:
+### Usuario
+- Realizar ventas desde Cobro  
+- Confirmar transacciones  
+- Consultar informes  
 
-bash
-Copiar código
-dotnet run
-O simplemente F5.
+---
 
-🎯 Uso básico
-👨‍💼 Administrador
-Crear/editar productos
+## Estructura del proyecto
 
-Registrar entradas
-
-👤 Usuario
-Realizar ventas desde Cobro
-
-Confirmar transacciones
-
-Consultar informes
-
-Autenticación usando usuarios creados en SQL Server.
-
-🗂 Estructura del proyecto
+```
 SFApp/
 │── Controllers/
 │── Services/
@@ -157,9 +142,13 @@ SFApp/
 │── Views/
 │── wwwroot/
 └── appsettings.json
-🔁 Endpoints / Rutas principales
-👤 Usuario estándar
-## Endpoints (Usuario estándar)
+```
+
+---
+
+## Endpoints - Rutas principales
+
+### Usuario estándar
 
 | Operación        | Método | Ruta                           | Descripción                 |
 |------------------|--------|--------------------------------|-----------------------------|
@@ -168,9 +157,7 @@ SFApp/
 | Vista de cobro   | GET    | /Cobro/Index                   | Selección de productos      |
 | Confirmar venta  | POST   | /Cobro/ConfirmarTransaccion    | Registrar venta y actualizar stock |
 
-
-🛠 Administrador
-## Endpoints (Administrador)
+### Administrador
 
 | Operación         | Método | Ruta                         | Descripción                  |
 |-------------------|--------|------------------------------|------------------------------|
@@ -178,57 +165,60 @@ SFApp/
 | Crear producto    | POST   | /Producto/Crear              | Registrar nuevo producto     |
 | Editar producto   | POST   | /Producto/Editar/{id}        | Editar producto existente    |
 | Entrada de stock  | POST   | /Entrada/Registrar           | Registrar ingreso de stock   |
-| Informes stock    | GET    | /Informe/Stock               | Consultas de stock e informes |
+| Informes stock    | GET    | /Informe/Stock               | Consultar informes de stock  |
 
+---
 
-🗃 Base de datos y SPs
+## Base de datos y SPs
+
 Tablas principales:
 
-Productos
-
-Clientes
-
-Usuarios
-
-Inventario
-
-Transacciones
+- Productos  
+- Clientes  
+- Usuarios  
+- Inventario  
+- Transacciones  
 
 Procedimientos almacenados:
 
-sp_RegistrarTransaccionVenta
+- sp_RegistrarTransaccionVenta  
+- sp_ActualizarTransaccion  
+- sp_ObtenerStock  
+- sp_VentasPorDia  
 
-sp_ActualizarTransaccion
+---
 
-sp_ObtenerStock
+## Autor
 
-sp_VentasPorDia
-
-👥 Autor
-Tu Nombre
+Tu Nombre  
 Desarrollador del sistema SurferPets.
 
-📄 Licencia
-Uso interno y educativo.
-No se permite su distribución comercial.
+---
 
-✅ Futuras mejoras
-Lectura de código de barras
+## Licencia
 
-Impresión de tickets
+Uso interno y educativo.  
+No se permite distribución comercial.
 
-Módulo de fidelización
+---
 
-Dashboard gráfico
+## Futuras mejoras
 
-Gestión multi-tienda
+- Lectura de código de barras  
+- Impresión de tickets  
+- Sistema de fidelización  
+- Dashboard gráfico  
+- Gestión multi-tienda  
 
-🙋 FAQ
-¿Se puede usar sin Visual Studio?
-✔ Sí. Solo necesitas .NET 8 y SQL Server.
+---
 
-¿Qué pasa si cancelo una venta?
-✔ El sistema ajusta el stock correctamente gracias a los SPs.
+## FAQ
 
-¿Está terminado?
-✔ La versión base sí, pero se seguirá ampliando.
+¿Se puede usar sin Visual Studio?  
+Sí, solo necesitas .NET 8 y SQL Server.
+
+¿Qué pasa si cancelo una venta?  
+El sistema ajusta el stock automáticamente mediante SPs.
+
+¿Está terminado?  
+La versión base sí, pero se seguirán implementando mejoras.
